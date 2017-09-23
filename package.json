@@ -34,5 +34,8 @@
     "url": "git://github.com/frank/thingdust.git"
   },
   "author": "frank",
-  "license": ""
+  "license": "",
+  "engines": {
+    "node": "6.9.5"
+  }
 }
