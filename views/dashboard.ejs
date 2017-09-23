@@ -1,0 +1,172 @@
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="hold-transition skin-blue">
+
+    <!-- Main content -->
+    <section class="content">
+
+    <!-- Top Row shows #messages, #gateways and #sensors -->
+    <div class="row">
+        
+      <div class="col-lg-6 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+          <div class="inner">
+            <h3 id="nrOfSensors">n.a.</h3>
+            <p>Active Sensors</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-microchip"></i>
+          </div>
+          <a href="#" class="small-box-footer">
+            More info <i class="fa fa-arrow-circle-right"></i>
+          </a>
+        </div>
+      </div>
+      <!-- ./col -->
+      
+      <div class="col-lg-6 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+          <div class="inner">
+            <h3 id="nrOfMessages">n.a.</h3>
+            <p>Total Messages</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-list-ul"></i>
+          </div>
+          <a href="#" class="small-box-footer">
+            More info <i class="fa fa-arrow-circle-right"></i>
+          </a>
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <!-- ./row -->
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box box-primary">
+          
+          <div class="box-header">
+            <h3 class="box-title">Usage</h3>
+
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-target="SensorTable"><i class="fa fa-list-ul"></i></button>
+              <button type="button" class="btn btn-box-tool" data-target="SensorGrid"><i class="fa fa-th"></i></button>
+            </div>
+
+          </div>
+          <!-- /.box-header -->
+
+          <div class="box-body table-responsive no-padding" id="SensorTable">
+            <table class="table table-hover">
+              <thead><tr>
+                <th>DevEUI</th>
+                <th>Location</th>
+                <th>Last Seen</th>
+                <th>Vibrations</th>
+                <th>Occupation</th>
+                <th>Temperature (&deg;C)</th>
+                <th>Humidity (rel. %) </th>
+                <th>Ambient Light (Lux)</th>
+                <th>Orientation (x,y,z)</th>
+                <th>Battery (mV)</th>
+              </tr>
+              <tbody id="sensor_table"> 
+              <!-- inserted by JS -->              
+              </tbody>
+            </table>
+          </div>
+          <!-- /.box-body -->
+        
+          <div class="box-body hidden" id="SensorGrid">
+            <div class="row" id="sensor_grid" > 
+              <!-- inserted by JS -->
+            </div>  
+            <!-- /.row -->
+
+          </div>
+          <!-- ./box-body -->
+
+        </div>
+        <!-- ./box -->
+          
+        <div class="box-footer clearfix">
+
+          <ul class="pagination pagination-sm no-margin pull-right">
+            <li><a href="#">«</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">»</a></li>
+          </ul>
+        </div>
+
+        </div>
+        <!-- .col -->
+      
+      </div>
+      <!-- ./row -->
+
+      <!-- Third Row displays graphs and statistics -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-primary">
+         
+          <div class="box-header with-border">
+            <h3 class="box-title">Weekly Report</h3>
+
+          </div>
+          <!-- /.box-header -->
+
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-8">
+                <p class="text-center">
+                  <strong>Activities: 6 Feb, 2017 - 12 Feb, 2017</strong>
+                </p>
+
+                <div class="chart">
+                  <!-- Sales Chart Canvas -->
+                  <canvas id="salesChart" style="height: 180px; width: 737px;" height="180" width="737"></canvas>
+                </div>
+                <!-- /.chart-responsive -->
+              </div>
+              
+              <!-- /.col -->
+              <div class="col-md-4">
+                <p class="text-center">
+                  <strong>Average Utilization</strong>
+                </p>
+
+              <div class="chart">
+                <canvas id="pieChart" style="height: 180px; width: 536px;" height="189" width="536"></canvas>
+              </div>
+              <!-- /.chart -->  
+       
+              </div>
+              <!-- /.col -->
+              
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- ./box-body -->
+            
+            <div class="box-footer">
+          </div>
+          <!-- /.box-footer -->
+          
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+<% block('localScripts', '<script src="/js/thingdust/dashboard.js"></script>') %>
