@@ -46,6 +46,7 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/messages': { view: 'pages/messages'},
-  '/sensors': { view: 'pages/sensors'}
+  '/sensors': { view: 'pages/sensors'},
+  '/things': { view: 'dashboard'}
 
 };

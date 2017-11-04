@@ -1,4 +1,6 @@
-var mqtt = require('mqtt');
+'use strict'
+
+var mqtt = require('mqtt')
 
 module.exports = function mqttHook (sails) {
 
@@ -7,18 +9,38 @@ module.exports = function mqttHook (sails) {
 	return {
 			
 		initialize: function (done) {
+			
 			client.on('connect', function () {
-				sails.log("connected");
+				sails.log("MQTT connected");
 				client.subscribe('thingdust');
 			});	
+			
+			client.on('reconnect', function (){
+				// sails.log("MQTT reconnected");
+			});
+			
 			client.on('message', function (topic, message) {
 				sails.log(message.toString());
 				sails.models.message.create(JSON.parse(message)).exec(function (err, finn){
-  					if (err) { return err; }
+  					if (err) { 
+  						sails.log.error("MQTT: ", err)
+  						return err; 
+  					}
   					sails.log('Message ID is:', finn.id);
   					return;
 				});
+			});
+
+			client.on('close', function(){
+				// sails.log("MQTT close");
+			});
+			client.on('offline', function(){
+				sails.log("MQTT offline");
+			});
+			client.on('error', function(){
+				sails.log("MQTT error");
 			});	
+
 			return done();
 		}
 	};

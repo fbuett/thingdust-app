@@ -8,41 +8,49 @@
 module.exports = {
 
   attributes: {
+ 
+    deveui: {
+      model: 'sensor',
+    },
+
+    // deveui: {type: 'string', required: true},
+    msgtype: {type: 'string', required: true},
+    temperature: {type: 'float', required: true},
+    humidity: {type: 'float', required: true},
+    trigger: {type: 'string', required: true},
+    occupancy_s: {type: 'integer', required: true},
+    unoccupancy_s: {type: 'integer', required: true},
+
+    // TTN specific values, optional
+    app_id: {type: 'string'},
+    dev_id: {type: 'string'}
 
   },
+
 
   afterCreate: function(entry, cb) {
 
   	// get DevEUI from message
-  	var sensorId = entry.ttn.hardware_serial;
+  	var sensorId = entry.deveui;
   	
-  	// TODO: Err check
-
-  	// get sensor data from message
-  	var sensorData = entry.thingdust.data;
 
   	// TODO: Err check
 
-  	// add DevEUI to sensor data
-  	sensorData.deveui = sensorId;
-
-  	// sails.log("Sensor: ", sensorData);
     
     // Update sensor data[DEVEUI] with latest message content
-    Sensor.updateOrCreate({deveui:sensorId},sensorData, function afterwards(err, updated){
+    Sensor.updateOrCreate({deveui:sensorId},entry, function afterwards(err, updated){
 
   	  if (err) {
   	    // handle error here- e.g. `res.serverError(err);`
   	    console.log("Sensor update error: ", err);
   	    cb();
   	  }
-  	  else 
-  	  	sails.log("Updated: ", updated);
     }); 
 
     // sails.sockets.broadcast('message', 'message_event', entry);
 
     cb();
-  }    
+  }  
+
 };
 

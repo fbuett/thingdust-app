@@ -28,25 +28,10 @@ module.exports.connections = {
   * Installed by default.                                                    *
   *                                                                          *
   ***************************************************************************/
-  localDiskDb: {
-    adapter: 'sails-disk'
-  },
-
-  /***************************************************************************
-  *                                                                          *
-  * MySQL is the world's most popular relational database.                   *
-  * http://en.wikipedia.org/wiki/MySQL                                       *
-  *                                                                          *
-  * Run: npm install sails-mysql                                             *
-  *                                                                          *
-  ***************************************************************************/
-  // someMysqlServer: {
-  //   adapter: 'sails-mysql',
-  //   host: 'YOUR_MYSQL_SERVER_HOSTNAME_OR_IP_ADDRESS',
-  //   user: 'YOUR_MYSQL_USER', //optional
-  //   password: 'YOUR_MYSQL_PASSWORD', //optional
-  //   database: 'YOUR_MYSQL_DB' //optional
+  // localDiskDb: {
+  //  adapter: 'sails-disk'
   // },
+
 
   /***************************************************************************
   *                                                                          *
@@ -55,33 +40,29 @@ module.exports.connections = {
   *                                                                          *
   * Run: npm install sails-mongo                                             *
   *                                                                          *
-  ***************************************************************************/
-  // someMongodbServer: {
-  //   adapter: 'sails-mongo',
-  //   host: 'localhost',
-  //   port: 27017,
-  //   user: 'username', //optional
-  //   password: 'password', //optional
-  //   database: 'your_mongo_db_name_here' //optional
-  // },
-
-  /***************************************************************************
-  *                                                                          *
-  * PostgreSQL is another officially supported relational database.          *
-  * http://en.wikipedia.org/wiki/PostgreSQL                                  *
-  *                                                                          *
-  * Run: npm install sails-postgresql                                        *
-  *                                                                          *
+  * PRODUCTION_MONGO_DB contains the PROD MongoDB URI and is set             *
+  * in the Azure web app application settings tab (environment variable)     *
   *                                                                          *
   ***************************************************************************/
-  // somePostgresqlServer: {
-  //   adapter: 'sails-postgresql',
-  //   host: 'YOUR_POSTGRES_SERVER_HOSTNAME_OR_IP_ADDRESS',
-  //   user: 'YOUR_POSTGRES_USER', // optional
-  //   password: 'YOUR_POSTGRES_PASSWORD', // optional
-  //   database: 'YOUR_POSTGRES_DB' //optional
-  // }
+  localMongodbServer: {
+     adapter: 'sails-mongo',
+     host: 'localhost',
+     port: 27017
+  },
 
+  azureMongodbServer: {
+     adapter: 'sails-mongo',
+     url: process.env.PRODUCTION_MONGO_DB,
+     ssl: true
+  },  
+
+  bitnamiMongodbServer: {
+     adapter: 'sails-mongo',
+     host: '40.68.127.164',
+     user: process.env.MONGO_DB_USER,
+     password: process.env.MONGO_DB_PASSWORD,
+     database: 'thingdust'
+  }
 
   /***************************************************************************
   *                                                                          *

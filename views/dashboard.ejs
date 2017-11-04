@@ -5,51 +5,13 @@
     <!-- Main content -->
     <section class="content">
 
-    <!-- Top Row shows #messages, #gateways and #sensors -->
-    <div class="row">
-        
-      <div class="col-lg-6 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-aqua">
-          <div class="inner">
-            <h3 id="nrOfSensors">n.a.</h3>
-            <p>Active Sensors</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-microchip"></i>
-          </div>
-          <a href="#" class="small-box-footer">
-            More info <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
-      </div>
-      <!-- ./col -->
-      
-      <div class="col-lg-6 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-yellow">
-          <div class="inner">
-            <h3 id="nrOfMessages">n.a.</h3>
-            <p>Total Messages</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-list-ul"></i>
-          </div>
-          <a href="#" class="small-box-footer">
-            More info <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
-      </div>
-      <!-- ./col -->
-    </div>
-    <!-- ./row -->
-
     <div class="row">
       <div class="col-xs-12">
-        <div class="box box-primary">
+        
+        <div class="box box-primary hidden" id="things_created_box">
           
           <div class="box-header">
-            <h3 class="box-title">Usage</h3>
+            <h3 class="box-title">Things</h3>
 
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-target="SensorTable"><i class="fa fa-list-ul"></i></button>
@@ -59,29 +21,25 @@
           </div>
           <!-- /.box-header -->
 
-          <div class="box-body table-responsive no-padding" id="SensorTable">
+          <div class="box-body table-responsive no-padding" id="ThingTable">
             <table class="table table-hover">
               <thead><tr>
-                <th>DevEUI</th>
+                <th>Name</th>
+                <th>Description</th>   
+                <th>Type</th>                             
                 <th>Location</th>
-                <th>Last Seen</th>
-                <th>Vibrations</th>
-                <th>Occupation</th>
-                <th>Temperature (&deg;C)</th>
-                <th>Humidity (rel. %) </th>
-                <th>Ambient Light (Lux)</th>
-                <th>Orientation (x,y,z)</th>
-                <th>Battery (mV)</th>
+                <th>Sensors</th>
+                <th>Last Seen</th>                
               </tr>
-              <tbody id="sensor_table"> 
+              <tbody id="thing_table"> 
               <!-- inserted by JS -->              
               </tbody>
             </table>
           </div>
           <!-- /.box-body -->
         
-          <div class="box-body hidden" id="SensorGrid">
-            <div class="row" id="sensor_grid" > 
+          <div class="box-body hidden" id="ThingGrid">
+            <div class="row" id="thing_grid" > 
               <!-- inserted by JS -->
             </div>  
             <!-- /.row -->
@@ -89,84 +47,117 @@
           </div>
           <!-- ./box-body -->
 
-        </div>
-        <!-- ./box -->
+          <div class="box-footer clearfix">
+
+            <ul class="pagination pagination-sm no-margin pull-right">
+              <li><a href="#">«</a></li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">»</a></li>
+            </ul>
+          </div>
           
-        <div class="box-footer clearfix">
-
-          <ul class="pagination pagination-sm no-margin pull-right">
-            <li><a href="#">«</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">»</a></li>
-          </ul>
-        </div>
+          Create another thing.
+              <button type="button" class="btn btn-app" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i></button>
+          <!-- /.row -->   
 
         </div>
-        <!-- .col -->
-      
-      </div>
-      <!-- ./row -->
+        <!-- ./box -->          
 
-      <!-- Third Row displays graphs and statistics -->
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box box-primary">
-         
-          <div class="box-header with-border">
-            <h3 class="box-title">Weekly Report</h3>
-
+        
+        <div class="box box-primary hidden" id="no_things_created_box">
+          
+          <div class="box-header">
+            <h3 class="box-title">Things</h3>
           </div>
           <!-- /.box-header -->
-
-          <div class="box-body">
+        
+          <div class="box-body" id="SensorGrid">
             <div class="row">
-              <div class="col-md-8">
-                <p class="text-center">
-                  <strong>Activities: 6 Feb, 2017 - 12 Feb, 2017</strong>
-                </p>
+              You don't have any things configured. Create one.
+              <button type="button" class="btn btn-app" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i></button>
+            </div>  
+            <!-- /.row -->
 
-                <div class="chart">
-                  <!-- Sales Chart Canvas -->
-                  <canvas id="salesChart" style="height: 180px; width: 737px;" height="180" width="737"></canvas>
-                </div>
-                <!-- /.chart-responsive -->
-              </div>
-              
-              <!-- /.col -->
-              <div class="col-md-4">
-                <p class="text-center">
-                  <strong>Average Utilization</strong>
-                </p>
+          </div>
+          <!-- ./box-body -->
 
-              <div class="chart">
-                <canvas id="pieChart" style="height: 180px; width: 536px;" height="189" width="536"></canvas>
-              </div>
-              <!-- /.chart -->  
-       
-              </div>
-              <!-- /.col -->
-              
-              </div>
-              <!-- /.row -->
-            </div>
-            <!-- ./box-body -->
-            
-            <div class="box-footer">
-          </div>
-          <!-- /.box-footer -->
-          
-          </div>
-          <!-- /.box -->
         </div>
-        <!-- /.col -->
+        <!-- ./box -->          
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                 
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Create a new Thing</h4>
+                  </div>
+                 
+                  <div class="modal-body">
+
+                    <form class="form form-horizontal" id="thing-create-form">
+                     
+                      <div class="box-body">
+                        
+                        <div class="form-group">
+                          <label for="inputThingName" class="col-sm-2 control-label">Name</label>
+
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="thing_name" name="thing_name" placeholder="Unique Thing Name">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="inputThingDesc" class="col-sm-2 control-label">Description</label>
+
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="thing_description" name="thing_description" placeholder="Thing Description">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="inputThingType" class="col-sm-2 control-label">Type</label>
+                            
+                          <div class="col-sm-10">
+                            <select class="form-control" id="inputThingType" name="thing_type" >
+                              <option value="space">Space</option>
+                              <option value="room">Room</option>
+                              <option value="desk">Desk</option>
+                              <option value="thing">Any other Thing</option>
+                            </select>
+                          </div>
+
+                        </div>
+
+                      </div>
+                      <!-- /.box-body -->
+
+                    </form>
+      
+                  </div>
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" form="thing-create-form">Create</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>  
+
+
+
       </div>
+      <!-- .col -->      
+    </div>
+    <!-- ./row -->
 
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
 
-
-<% block('localScripts', '<script src="/js/thingdust/dashboard.js"></script>') %>
