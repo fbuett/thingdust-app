@@ -34,7 +34,7 @@ $(function() {
     // build table row
     var row = '';
     row += '<tr '+ 'id=' + entry["id"] + ' >';
-    row += '<td>' + entry["deveui"].deveui + '</td>';
+    row += '<td>' + entry["deveui"] + '</td>';
     row += '<td>' + entry["msgtype"] + '</td>';
     row += '<td>' + moment(entry["createdAt"]).format("dddd, MMMM Do YYYY, HH:mm:ss") + '</td>';       
     row += '<td>' + entry["occupancy_s"] + '</td>';      
