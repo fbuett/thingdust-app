@@ -33,7 +33,11 @@ var jsFilesToInject = [
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
-  'js/**/*.js'
+  'js/**/*.js',
+
+  // Exclude page-specific files from global load
+  // Include them in page.ejs directly if needed
+  '!js/thingdust/**/*.js'  
 ];
 
 

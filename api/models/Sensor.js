@@ -8,7 +8,7 @@
 module.exports = {
 
   // disable auto-generated primary key
-  autoPK: false,
+  // autoPK: false,
 
   attributes: {
     

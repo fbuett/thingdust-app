@@ -1,7 +1,30 @@
 $(function() {
 
   'use strict';
+  
+  var msgTable = new Array();
 
+
+
+  // init message table object
+  var t =  $('#messages').DataTable( {
+      data: msgTable,
+      columns: [
+        { data: "deveui"},
+        { data: "msgtype"},
+        { data: "createdAt", 
+          render: function(d) {
+            return moment(d).format("DD.MM.YYYY HH:mm");
+            }
+        },
+        { data: "occupancy_s"},        
+        { data: "temperature"},
+        { data: "humidity"},
+        { data: "app_id"},
+        { data: "dev_id"}       
+        ],
+      order: [[ 2, "desc" ]]
+    });
 
   // reload page after socket reconnect 
   io.socket.on('reconnect', function(event) {
@@ -11,43 +34,22 @@ $(function() {
   // listen to "message" event
   io.socket.on('message', function(entry) { 
 
-    message_table_row (entry.data);
+    console.log("New message event: ", entry.data);
+    
+    // add to message table
+    t.row.add(entry.data);
+    t.draw(false);
 
   });
 
-  // :/GET messages
-  io.socket.get("/message",{sort: 'updatedAt DESC'}, function (body, response) {
-
-    for (var i = 0; i < body.length ; i++) {        
-      message_table_row(body[i]); 
-    }
-  
-  }); 
-
-  /* Dashboard - Real-time Updates
-   * -----------------------
-   * Get message data at real-time
-   */  
-
-  function message_table_row(entry) {
-
-    // build table row
-    var row = '';
-    row += '<tr '+ 'id=' + entry["id"] + ' >';
-    row += '<td>' + entry["deveui"] + '</td>';
-    row += '<td>' + entry["msgtype"] + '</td>';
-    row += '<td>' + moment(entry["createdAt"]).format("dddd, MMMM Do YYYY, HH:mm:ss") + '</td>';       
-    row += '<td>' + entry["occupancy_s"] + '</td>';      
-    row += '<td>' + entry["temperature"] + '</td>';
-    row += '<td>' + entry["humidity"] + '</td>';
-    row += '<td>' + entry["app_id"] + '</td>';
-    row += '<td>' + entry["dev_id"] + '</td>';        
-
-    // add closing </tr> tag to the string:
-    row += '</tr>';
+  // :/GET all messages
+  io.socket.get("/message",{sort: 'updatedAt DESC'}, function (msgTable, response) {
     
-    //append created table row to table body:
-    $('#message_log').prepend(row)    
-  };
+    // update table
+    t.clear();
+    t.rows.add(msgTable);
+    t.draw();    
+
+  }); 
 
 });
