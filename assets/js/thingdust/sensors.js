@@ -35,9 +35,9 @@ $(function() {
     console.log("sensor:", entry)
 
     // add to message table
-    t.row.add(entry.data);
-    t.draw(false);
-    
+
+    // tbd
+
   });
 
   // :/GET sensors
@@ -62,43 +62,77 @@ $(function() {
     var deveui = t.row(idx.row).data().deveui;
     // console.log( 'DEVEUI: ', deveui );
 
-    io.socket.get("/message?deveui="+deveui, {sort: 'updatedAt ASC'}, function (body, response) {
+    io.socket.get("/message?deveui="+deveui, {sort: 'updatedAt DESC'}, function (body, response) {
 
       // build temperature data object for use in chart.js
       for (var i=0; i<body.length; i++) {
-        tempData[i] = body[i].temperature;
-        humData[i] = body[i].humidity;
-        occuData[i] = body[i].occupancy_s;
-        timeData[i] = moment(body[i].createdAt).format("HH:mm");
+        
+        // reverse timestamp order for x axis
+        var j = body.length - 1 - i;
+        
+        tempData[i] = body[j].temperature;
+        humData[i] = body[j].humidity;
+        occuData[i] = body[j].occupancy_s;
+        timeData[i] = moment(body[j].createdAt).format("HH:mm");
       }
 
       // prepare chart
       var ctx = document.getElementById("tempChart").getContext('2d');
 
       var myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
           labels: timeData,
           datasets: [{
             label: "Temperature",
+            type: 'line',
             yAxisID: "T",
-            data: tempData
+            data: tempData,
+            borderColor: "#8e5ea2",
+            fill: false
             }, {
             label: "Humidity",
+            type: 'line',            
             yAxisID: "H",
-            data: humData
+            data: humData,
+            borderColor: "#e8c3b9", 
+            fill: false             
+            }, {
+            label: "Occupation",
+            type: 'bar',
+            yAxisID: "O",
+            data: occuData,
+            borderColor: "#ff0000",
+            backgroundColor: "#ff0000"        
           }]
         },
         options: {
+          title: {
+            display: true,
+            text: "Temperature and Humidity"
+          },
           scales: {
             yAxes: [{
               id: 'T',
               type: 'linear',
-              position: 'left'              
+              position: 'left',
+              ticks: {
+                  suggestedMin: 20    
+              }                          
             }, {
               id: 'H',
               type: 'linear',
-              position: 'right'
+              position: 'right',
+              ticks: {
+                  suggestedMin: 40 
+              }, 
+            }, {
+              display: false,
+              id: 'O',
+              type: 'linear',
+              ticks: {
+                  suggestedMax: 350 
+              }              
             }]
           }
         }

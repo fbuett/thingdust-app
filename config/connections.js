@@ -48,17 +48,11 @@ module.exports.connections = {
      adapter: 'sails-mongo',
      host: 'localhost',
      port: 27017
-  },
-
-  azureMongodbServer: {
-     adapter: 'sails-mongo',
-     url: process.env.PRODUCTION_MONGO_DB,
-     ssl: true
   },  
 
   bitnamiMongodbServer: {
      adapter: 'sails-mongo',
-     host: '40.68.127.164',
+     host: '10.0.1.5',
      user: process.env.MONGO_DB_USER,
      password: process.env.MONGO_DB_PASSWORD,
      database: 'thingdust'
