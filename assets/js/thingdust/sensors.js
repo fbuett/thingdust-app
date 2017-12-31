@@ -8,6 +8,11 @@ $(function() {
   var occuData = new Array();
   var timeData = new Array();
 
+  var maxTempData;
+  var minTempData;
+  var maxHumData;
+  var minHumData; 
+
   var t = $('#sensors').DataTable( {
       data: sensorTable,
       columns: [
@@ -64,14 +69,28 @@ $(function() {
 
     io.socket.get("/message?deveui="+deveui, {sort: 'updatedAt DESC'}, function (body, response) {
 
+      
+      // initiaize max and min values
+      maxTempData = body[body.length - 1].temperature;
+      minTempData = body[body.length - 1].temperature;
+      maxHumData = body[body.length - 1].humidity;
+      minHumData = body[body.length - 1].humidity;
+
+
       // build temperature data object for use in chart.js
-      for (var i=0; i<body.length; i++) {
+      for (var i=1; i<body.length; i++) {
         
         // reverse timestamp order for x axis
         var j = body.length - 1 - i;
         
         tempData[i] = body[j].temperature;
+        if (tempData[i] > maxTempData) maxTempData=tempData[i];
+        if (tempData[i] < minTempData) minTempData=tempData[i];
+
         humData[i] = body[j].humidity;
+        if (humData[i] > maxHumData) maxHumData=humData[i];
+        if (humData[i] < minHumData) minHumData=humData[i];
+
         occuData[i] = body[j].occupancy_s;
         timeData[i] = moment(body[j].createdAt).format("HH:mm");
       }
@@ -109,7 +128,7 @@ $(function() {
         options: {
           title: {
             display: true,
-            text: "Temperature and Humidity"
+            text: deveui
           },
           scales: {
             yAxes: [{
@@ -117,14 +136,16 @@ $(function() {
               type: 'linear',
               position: 'left',
               ticks: {
-                  suggestedMin: 20    
+                  suggestedMin: minTempData - 2,
+                  suggestedMax: maxTempData + 2,    
               }                          
             }, {
               id: 'H',
               type: 'linear',
               position: 'right',
               ticks: {
-                  suggestedMin: 40 
+                  suggestedMin: minHumData - 2,
+                  suggestedMax: minHumData + 2, 
               }, 
             }, {
               display: false,
